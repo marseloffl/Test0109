@@ -15,7 +15,7 @@ pipeline {
         stage("Push to DockerHub"){
             steps{
 withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     sh "docker tag node-app-test-new ${env.dockerHubUser}/todo-node-app:1.0"
                     sh "docker push ${env.dockerHubUser}/todo-node-app:1.0" 
                 }
