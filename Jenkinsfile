@@ -10,15 +10,14 @@ pipeline {
                 git url: "https://github.com/marseloffl/test0109.git", branch: "master"
             }
         }
-        stage("Build & Test"){
+        stage("Build"){
             steps{
                 sh "docker build -t marseloffl/todo-node-app:1.0 ."
             }
         }
-        stage("Push to DockerHub"){
+        stage("Login"){
             steps{
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh "docker tag node-app-test-new marseloffl/todo-node-app:1.0"
             }
         }
         stage('Push') {
