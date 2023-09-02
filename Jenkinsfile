@@ -19,13 +19,17 @@ pipeline {
             steps{
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     sh "docker tag node-app-test-new marseloffl/todo-node-app:1.0"
-                    sh "docker push marseloffl/todo-node-app:1.0" 
             }
         }
-        stage("Deploy"){
-            steps{
-                sh "docker-compose down && docker-compose up -d"
-            }
-        }
+        stage('Push') {
+      steps {
+        sh "docker push marseloffl/todo-node-app:1.0"
+      }
+    }
+        //stage("Deploy"){
+          //  steps{
+            //    sh "docker-compose down && docker-compose up -d"
+            //}
+        //}
     }
 }
